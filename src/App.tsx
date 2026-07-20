@@ -6,6 +6,8 @@ import { Landing } from './pages/Landing';
 import { Login } from './pages/Login';
 import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
+import { Applications } from './pages/Applications';
+import { NotFound } from './pages/NotFound';
 
 // Protected Route Wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -58,8 +60,16 @@ const AppContent: React.FC = () => {
               </ProtectedRoute>
             } 
           />
-          {/* Fallback route */}
-          <Route path="*" element={<Navigate to="/" replace />} />
+          <Route 
+            path="/applications" 
+            element={
+              <ProtectedRoute>
+                <Applications />
+              </ProtectedRoute>
+            } 
+          />
+          {/* 404 Not Found */}
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
     </div>
