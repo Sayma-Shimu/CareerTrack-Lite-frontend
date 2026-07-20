@@ -1,114 +1,121 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, LogOut, LayoutDashboard, User as UserIcon } from 'lucide-react';
+import { Briefcase, LogOut, LayoutDashboard, User as UserIcon, Menu, X } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const [menuOpen, setMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/');
+    setMenuOpen(false);
   };
 
   const isActive = (path: string) => location.pathname === path;
 
+  const closeMenu = () => setMenuOpen(false);
+
   return (
-    <header className="glass-panel" style={{
-      borderRadius: '0 0 var(--radius-lg) var(--radius-lg)',
-      borderTop: 'none',
-      borderLeft: 'none',
-      borderRight: 'none',
-      position: 'sticky',
-      top: 0,
-      zIndex: 100,
-      padding: '0 20px',
-      height: '70px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between',
-      background: 'rgba(18, 22, 32, 0.8)',
-    }}>
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-        <div style={{
-          background: 'linear-gradient(135deg, hsl(var(--accent-primary)), hsl(var(--accent-secondary)))',
-          borderRadius: 'var(--radius-sm)',
-          width: '36px',
-          height: '36px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          boxShadow: 'var(--glow-shadow)'
-        }}>
+    <header className="navbar">
+      {/* Brand */}
+      <Link to="/" className="navbar-brand" onClick={closeMenu}>
+        <div className="navbar-logo">
           <Briefcase size={20} color="white" />
         </div>
-        <span className="gradient-text" style={{ fontSize: '1.4rem', fontWeight: 800, letterSpacing: '-0.03em' }}>
-          CareerTrack Lite
-        </span>
+        <span className="gradient-text navbar-title">CareerTrack Lite</span>
       </Link>
 
-      <nav style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
+      {/* Desktop Nav */}
+      <nav className="navbar-desktop">
         {user ? (
           <>
-            <Link 
-              to="/dashboard" 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '6px',
-                color: isActive('/dashboard') ? 'hsl(var(--accent-primary))' : 'hsl(var(--text-secondary))',
-                fontWeight: 600,
-                fontSize: '0.95rem'
-              }}
+            <Link
+              to="/dashboard"
+              className={`nav-link ${isActive('/dashboard') ? 'nav-link-active' : ''}`}
             >
               <LayoutDashboard size={18} />
               Dashboard
             </Link>
-            <Link 
-              to="/applications" 
-              style={{ 
-                display: 'flex', 
-                alignItems: 'center', 
-                gap: '6px',
-                color: isActive('/applications') ? 'hsl(var(--accent-primary))' : 'hsl(var(--text-secondary))',
-                fontWeight: 600,
-                fontSize: '0.95rem'
-              }}
+            <Link
+              to="/applications"
+              className={`nav-link ${isActive('/applications') ? 'nav-link-active' : ''}`}
             >
               <Briefcase size={18} />
               Applications
             </Link>
-            
-            <div style={{ height: '20px', width: '1px', background: 'hsl(var(--border-color))' }} />
+            <div className="nav-divider" />
+            <div className="nav-user">
+              <UserIcon size={16} />
+              <span>{user.name}</span>
+            </div>
+            <button onClick={handleLogout} className="btn btn-secondary btn-sm">
+              <LogOut size={14} />
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className="btn btn-secondary btn-sm">Log In</Link>
+            <Link to="/register" className="btn btn-primary btn-sm">Sign Up</Link>
+          </>
+        )}
+      </nav>
 
-            <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.9rem', color: 'hsl(var(--text-muted))' }}>
+      {/* Mobile Hamburger */}
+      <button
+        className="navbar-hamburger"
+        onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle menu"
+      >
+        {menuOpen ? <X size={24} /> : <Menu size={24} />}
+      </button>
+
+      {/* Mobile Dropdown */}
+      {menuOpen && (
+        <div className="navbar-mobile-menu">
+          {user ? (
+            <>
+              <div className="mobile-user-info">
                 <UserIcon size={16} />
                 <span>{user.name}</span>
               </div>
-              <button 
-                onClick={handleLogout} 
-                className="btn btn-secondary" 
-                style={{ padding: '6px 12px', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '6px' }}
+              <Link
+                to="/dashboard"
+                className={`mobile-nav-link ${isActive('/dashboard') ? 'nav-link-active' : ''}`}
+                onClick={closeMenu}
               >
+                <LayoutDashboard size={18} />
+                Dashboard
+              </Link>
+              <Link
+                to="/applications"
+                className={`mobile-nav-link ${isActive('/applications') ? 'nav-link-active' : ''}`}
+                onClick={closeMenu}
+              >
+                <Briefcase size={18} />
+                Applications
+              </Link>
+              <button onClick={handleLogout} className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
                 <LogOut size={14} />
                 Logout
               </button>
-            </div>
-          </>
-        ) : (
-          <div style={{ display: 'flex', gap: '12px' }}>
-            <Link to="/login" className="btn btn-secondary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-              Log In
-            </Link>
-            <Link to="/register" className="btn btn-primary" style={{ padding: '8px 16px', fontSize: '0.9rem' }}>
-              Sign Up
-            </Link>
-          </div>
-        )}
-      </nav>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }} onClick={closeMenu}>
+                Log In
+              </Link>
+              <Link to="/register" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} onClick={closeMenu}>
+                Sign Up
+              </Link>
+            </>
+          )}
+        </div>
+      )}
     </header>
   );
 };
