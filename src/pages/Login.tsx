@@ -21,27 +21,22 @@ export const Login: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-
-    if (!email.trim() || !password) {
-      setError('All fields are required');
-      return;
-    }
+    if (!email.trim() || !password) { setError('All fields are required'); return; }
 
     setLoading(true);
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, password })
       });
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.error || 'Login failed');
-
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Login failed');
       setSuccess(true);
       login(data.token, data.user);
       setTimeout(() => navigate('/dashboard'), 1000);
     } catch (err: any) {
-      setError(err.message || 'An error occurred during login');
+      setError(err.message || 'An error occurred');
     } finally {
       setLoading(false);
     }
@@ -50,53 +45,46 @@ export const Login: React.FC = () => {
   return (
     <div className="auth-page-wrapper animate-fade-in">
       <div className="auth-card">
-        {/* Top gradient bar */}
         <div className="auth-card-bar" />
 
         {/* Logo */}
-        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-          <div style={{
-            background: 'linear-gradient(135deg, hsl(var(--accent-primary)), hsl(var(--accent-secondary)))',
-            borderRadius: 'var(--radius-md)',
-            width: '52px', height: '52px',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            boxShadow: 'var(--glow-shadow)'
-          }}>
+        <div className="flex justify-center mb-6">
+          <div className="navbar-logo">
             <Briefcase size={26} color="white" />
           </div>
         </div>
 
-        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
-          <h2 style={{ fontSize: '2rem', marginBottom: '8px', fontWeight: 800 }}>Welcome Back</h2>
-          <p style={{ color: 'hsl(var(--text-secondary))', fontSize: '0.95rem' }}>
-            Log in to manage your applications and view analytics
+        <div className="text-center mb-8">
+          <h2 className="text-3xl font-extrabold mb-2">Welcome Back</h2>
+          <p className="text-sm" style={{ color: 'hsl(var(--text-secondary))' }}>
+            Log in to manage your applications
           </p>
         </div>
 
         {error && (
-          <div className="alert alert-danger">
+          <div className="alert alert-danger mb-5">
             <ShieldAlert size={18} />
             <span>{error}</span>
           </div>
         )}
-
         {success && (
-          <div className="alert alert-success">
+          <div className="alert alert-success mb-5">
             <Sparkles size={18} />
             <span>Login successful! Redirecting...</span>
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Email */}
           <div className="form-group">
             <label className="form-label" htmlFor="email">Email Address</label>
-            <div style={{ position: 'relative' }}>
+            <div className="relative">
               <Mail size={18} className="input-icon-left" />
               <input
                 id="email"
                 type="email"
                 placeholder="you@example.com"
-                className="form-input input-with-icon-left"
+                className="form-input input-with-icon-left w-full"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 disabled={loading || success}
@@ -104,15 +92,16 @@ export const Login: React.FC = () => {
             </div>
           </div>
 
-          <div className="form-group" style={{ marginBottom: '28px' }}>
+          {/* Password */}
+          <div className="form-group">
             <label className="form-label" htmlFor="password">Password</label>
-            <div style={{ position: 'relative' }}>
+            <div className="relative">
               <Lock size={18} className="input-icon-left" />
               <input
                 id="password"
                 type={showPassword ? 'text' : 'password'}
                 placeholder="Enter your password"
-                className="form-input input-with-icon-both"
+                className="form-input input-with-icon-both w-full"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 disabled={loading || success}
@@ -131,22 +120,21 @@ export const Login: React.FC = () => {
 
           <button
             type="submit"
-            className="btn btn-primary"
-            style={{ width: '100%', height: '52px', fontSize: '1rem' }}
+            className="btn btn-primary w-full h-13 text-base mt-2"
+            style={{ height: '52px' }}
             disabled={loading || success}
           >
             {loading ? (
-              <>
-                <Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} />
-                Logging in...
-              </>
+              <><Loader2 size={18} style={{ animation: 'spin 1s linear infinite' }} /> Logging in...</>
             ) : 'Log In'}
           </button>
         </form>
 
-        <p style={{ textAlign: 'center', marginTop: '28px', color: 'hsl(var(--text-secondary))', fontSize: '0.95rem' }}>
+        <p className="text-center mt-7 text-sm" style={{ color: 'hsl(var(--text-secondary))' }}>
           Don't have an account?{' '}
-          <Link to="/register" style={{ fontWeight: 700 }}>Sign Up</Link>
+          <Link to="/register" className="font-bold" style={{ color: 'hsl(var(--accent-primary))' }}>
+            Sign Up
+          </Link>
         </p>
       </div>
     </div>

@@ -9,52 +9,38 @@ export const Navbar: React.FC = () => {
   const location = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    navigate('/');
-    setMenuOpen(false);
-  };
-
+  const handleLogout = () => { logout(); navigate('/'); setMenuOpen(false); };
   const isActive = (path: string) => location.pathname === path;
-
-  const closeMenu = () => setMenuOpen(false);
+  const close = () => setMenuOpen(false);
 
   return (
     <header className="navbar">
       {/* Brand */}
-      <Link to="/" className="navbar-brand" onClick={closeMenu}>
+      <Link to="/" className="navbar-brand" onClick={close}>
         <div className="navbar-logo">
           <Briefcase size={20} color="white" />
         </div>
         <span className="gradient-text navbar-title">CareerTrack Lite</span>
       </Link>
 
-      {/* Desktop Nav */}
+      {/* Desktop nav */}
       <nav className="navbar-desktop">
         {user ? (
           <>
-            <Link
-              to="/dashboard"
-              className={`nav-link ${isActive('/dashboard') ? 'nav-link-active' : ''}`}
-            >
-              <LayoutDashboard size={18} />
-              Dashboard
+            <Link to="/dashboard"
+              className={`nav-link ${isActive('/dashboard') ? 'nav-link-active' : ''}`}>
+              <LayoutDashboard size={18} /> Dashboard
             </Link>
-            <Link
-              to="/applications"
-              className={`nav-link ${isActive('/applications') ? 'nav-link-active' : ''}`}
-            >
-              <Briefcase size={18} />
-              Applications
+            <Link to="/applications"
+              className={`nav-link ${isActive('/applications') ? 'nav-link-active' : ''}`}>
+              <Briefcase size={18} /> Applications
             </Link>
             <div className="nav-divider" />
-            <div className="nav-user">
-              <UserIcon size={16} />
-              <span>{user.name}</span>
-            </div>
-            <button onClick={handleLogout} className="btn btn-secondary btn-sm">
-              <LogOut size={14} />
-              Logout
+            <span className="nav-user hidden md:flex">
+              <UserIcon size={16} />{user.name}
+            </span>
+            <button onClick={handleLogout} className="btn btn-secondary btn-sm flex items-center gap-1">
+              <LogOut size={14} /> Logout
             </button>
           </>
         ) : (
@@ -65,51 +51,41 @@ export const Navbar: React.FC = () => {
         )}
       </nav>
 
-      {/* Mobile Hamburger */}
-      <button
-        className="navbar-hamburger"
-        onClick={() => setMenuOpen(!menuOpen)}
-        aria-label="Toggle menu"
-      >
+      {/* Hamburger button */}
+      <button className="navbar-hamburger md:hidden" onClick={() => setMenuOpen(!menuOpen)}
+        aria-label="Toggle menu">
         {menuOpen ? <X size={24} /> : <Menu size={24} />}
       </button>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile dropdown */}
       {menuOpen && (
         <div className="navbar-mobile-menu">
           {user ? (
             <>
               <div className="mobile-user-info">
-                <UserIcon size={16} />
-                <span>{user.name}</span>
+                <UserIcon size={16} /><span>{user.name}</span>
               </div>
-              <Link
-                to="/dashboard"
+              <Link to="/dashboard"
                 className={`mobile-nav-link ${isActive('/dashboard') ? 'nav-link-active' : ''}`}
-                onClick={closeMenu}
-              >
-                <LayoutDashboard size={18} />
-                Dashboard
+                onClick={close}>
+                <LayoutDashboard size={18} /> Dashboard
               </Link>
-              <Link
-                to="/applications"
+              <Link to="/applications"
                 className={`mobile-nav-link ${isActive('/applications') ? 'nav-link-active' : ''}`}
-                onClick={closeMenu}
-              >
-                <Briefcase size={18} />
-                Applications
+                onClick={close}>
+                <Briefcase size={18} /> Applications
               </Link>
-              <button onClick={handleLogout} className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }}>
-                <LogOut size={14} />
-                Logout
+              <button onClick={handleLogout}
+                className="btn btn-secondary w-full justify-center flex items-center gap-2 mt-2">
+                <LogOut size={14} /> Logout
               </button>
             </>
           ) : (
             <>
-              <Link to="/login" className="btn btn-secondary" style={{ width: '100%', justifyContent: 'center' }} onClick={closeMenu}>
+              <Link to="/login" className="btn btn-secondary w-full justify-center" onClick={close}>
                 Log In
               </Link>
-              <Link to="/register" className="btn btn-primary" style={{ width: '100%', justifyContent: 'center' }} onClick={closeMenu}>
+              <Link to="/register" className="btn btn-primary w-full justify-center" onClick={close}>
                 Sign Up
               </Link>
             </>
