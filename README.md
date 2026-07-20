@@ -1,32 +1,105 @@
-# React + TypeScript + Vite
+# CareerTrack Lite — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+A responsive React + TypeScript frontend for CareerTrack Lite, a full-stack job application tracking system.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Links
 
-## React Compiler
+- **Frontend:** _(add Vercel link after deployment)_
+- **Backend API:** _(add Render link after deployment)_
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## Features
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+- Register and log in securely with JWT authentication
+- Protected dashboard showing application statistics
+- Add, view, edit and delete job applications
+- Search by company or job title
+- Filter by application status and source
+- Sort by newest or oldest application date
+- Responsive layout for desktop and mobile
+- Loading, empty and error states throughout
+- Delete confirmation modal
+- Status badges with color coding
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+---
+
+## Tech Stack
+
+- React 19 + TypeScript
+- Vite
+- React Router v6
+- Lucide React (icons)
+- CSS custom properties (no CSS framework)
+
+---
+
+## Local Setup
+
+```bash
+# 1. Clone the repository
+git clone https://github.com/Sayma-Shimu/CareerTrack-Lite-frontend.git
+cd CareerTrack-Lite-frontend
+
+# 2. Install dependencies
+npm install
+
+# 3. Create environment file
+cp .env.example .env
+
+# 4. Start development server
+npm run dev
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## Environment Variables
+
+Create a `.env` file based on `.env.example`:
+
+```env
+VITE_API_URL=http://localhost:5000/api
+```
+
+In production, set `VITE_API_URL` to your deployed backend URL.
+
+---
+
+## Test Credentials
+
+```
+Email:    test@careertrack.com
+Password: test1234
+```
+
+_(Create this account after deployment using the Register page)_
+
+---
+
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Landing / home page |
+| `/register` | User registration |
+| `/login` | User login |
+| `/dashboard` | Stats and recent applications (protected) |
+| `/applications` | Full CRUD list with search and filter (protected) |
+| `*` | 404 Not Found |
+
+---
+
+## AI Tools Used
+
+Kiro AI was used for code assistance, debugging and implementation guidance during development.
+
+---
+
+## Known Limitations & Future Improvements
+
+- No pagination on the applications list (planned)
+- No email verification on registration
+- Charts/graphs for dashboard analytics (planned bonus)
+- Dark/light theme toggle (planned)
