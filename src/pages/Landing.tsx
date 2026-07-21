@@ -1,72 +1,44 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Briefcase, ShieldCheck, BarChart3, Sparkles } from 'lucide-react';
+import { Briefcase, ShieldCheck, BarChart3, Sparkles, ArrowRight } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export const Landing: React.FC = () => {
   const { user } = useAuth();
 
   return (
-    <div className="animate-fade-in" style={{
-      maxWidth: '1200px',
-      margin: '0 auto',
-      padding: '80px 20px 40px 20px',
-      display: 'flex',
-      flexDirection: 'column',
-      alignItems: 'center',
-      minHeight: 'calc(100vh - 120px)',
-    }}>
-      {/* Hero Section */}
-      <div style={{ textAlign: 'center', maxWidth: '800px', marginBottom: '80px' }}>
-        <div style={{
-          display: 'inline-flex',
-          alignItems: 'center',
-          gap: '8px',
-          background: 'rgba(112, 93, 242, 0.1)',
-          border: '1px solid rgba(112, 93, 242, 0.2)',
-          borderRadius: '50px',
-          padding: '6px 16px',
-          color: 'hsl(var(--accent-primary))',
-          fontSize: '0.85rem',
-          fontWeight: 700,
-          marginBottom: '24px',
-          textTransform: 'uppercase',
-          letterSpacing: '0.05em'
-        }}>
-          <Sparkles size={14} />
+    <div className="animate-fade-in flex flex-col items-center min-h-[calc(100vh-70px)] px-5 py-16 max-w-6xl mx-auto">
+
+      {/* Hero */}
+      <div className="text-center max-w-3xl mb-20">
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-6 text-xs font-bold uppercase tracking-widest"
+          style={{ background: 'rgba(112,93,242,0.1)', border: '1px solid rgba(112,93,242,0.2)', color: 'hsl(var(--accent-primary))' }}>
+          <Sparkles size={13} />
           Organize Your Job Search Smarter
         </div>
-        
-        <h1 style={{
-          fontSize: '3.5rem',
-          lineHeight: '1.1',
-          marginBottom: '24px',
-          fontWeight: 800
-        }}>
-          Master Your Job Search with <span className="gradient-text">CareerTrack Lite</span>
+
+        <h1 className="text-5xl sm:text-6xl font-extrabold leading-tight mb-6">
+          Master Your Job Search with{' '}
+          <span className="gradient-text">CareerTrack Lite</span>
         </h1>
-        
-        <p style={{
-          color: 'hsl(var(--text-secondary))',
-          fontSize: '1.2rem',
-          lineHeight: '1.6',
-          marginBottom: '40px'
-        }}>
+
+        <p className="text-lg leading-relaxed mb-10 max-w-xl mx-auto"
+          style={{ color: 'hsl(var(--text-secondary))' }}>
           A simple, secure, and clean dashboard to manage all your job applications.
-          Track progress, prepare, and stay on top of interview cycles.
+          Track progress and stay on top of interview cycles.
         </p>
 
-        <div style={{ display: 'flex', gap: '16px', justifyContent: 'center' }}>
+        <div className="flex gap-4 justify-center flex-wrap">
           {user ? (
-            <Link to="/dashboard" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
-              Go to Dashboard
+            <Link to="/dashboard" className="btn btn-primary px-7 py-3 text-base flex items-center gap-2">
+              Go to Dashboard <ArrowRight size={18} />
             </Link>
           ) : (
             <>
-              <Link to="/register" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
-                Get Started Free
+              <Link to="/register" className="btn btn-primary px-7 py-3 text-base flex items-center gap-2">
+                Get Started Free <ArrowRight size={18} />
               </Link>
-              <Link to="/login" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1rem' }}>
+              <Link to="/login" className="btn btn-secondary px-7 py-3 text-base">
                 Log In
               </Link>
             </>
@@ -74,92 +46,41 @@ export const Landing: React.FC = () => {
         </div>
       </div>
 
-      {/* Features Section */}
-      <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-        gap: '24px',
-        width: '100%',
-        marginBottom: '100px'
-      }}>
-        <div className="glass-panel" style={{ padding: '30px', transition: 'all 0.3s ease' }}>
-          <div style={{
-            background: 'rgba(112, 93, 242, 0.1)',
-            width: '48px',
-            height: '48px',
-            borderRadius: 'var(--radius-md)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'hsl(var(--accent-primary))',
-            marginBottom: '20px'
-          }}>
-            <Briefcase size={24} />
+      {/* Feature Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full mb-20">
+        {[
+          {
+            icon: <Briefcase size={24} />,
+            title: 'Track Applications',
+            desc: 'Store job post URL, source, application date, and custom notes. Never lose track of where you applied.'
+          },
+          {
+            icon: <ShieldCheck size={24} />,
+            title: 'Secure & Personal',
+            desc: 'Built on bcrypt password hashing and JWT tokens. Your data is private — only you can access it.'
+          },
+          {
+            icon: <BarChart3 size={24} />,
+            title: 'Analytics & Stats',
+            desc: 'Instantly view metrics for your pipeline: applied, interviews, rejections, and pending offers.'
+          }
+        ].map((f) => (
+          <div key={f.title} className="glass-panel p-7 hover:scale-[1.02] transition-transform duration-300">
+            <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-5"
+              style={{ background: 'rgba(112,93,242,0.1)', color: 'hsl(var(--accent-primary))' }}>
+              {f.icon}
+            </div>
+            <h3 className="text-xl font-bold mb-3">{f.title}</h3>
+            <p className="text-sm leading-relaxed" style={{ color: 'hsl(var(--text-secondary))' }}>{f.desc}</p>
           </div>
-          <h3 style={{ fontSize: '1.25rem', marginBottom: '12px' }}>Track Applications</h3>
-          <p style={{ color: 'hsl(var(--text-secondary))', fontSize: '0.95rem', lineHeight: '1.5' }}>
-            Store details such as job post URL, source, application date, and custom notes. Never lose track of where you applied.
-          </p>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '30px', transition: 'all 0.3s ease' }}>
-          <div style={{
-            background: 'rgba(112, 93, 242, 0.1)',
-            width: '48px',
-            height: '48px',
-            borderRadius: 'var(--radius-md)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'hsl(var(--accent-primary))',
-            marginBottom: '20px'
-          }}>
-            <ShieldCheck size={24} />
-          </div>
-          <h3 style={{ fontSize: '1.25rem', marginBottom: '12px' }}>Secure & Personal</h3>
-          <p style={{ color: 'hsl(var(--text-secondary))', fontSize: '0.95rem', lineHeight: '1.5' }}>
-            Your data is protected. Built on cryptographically secure bcrypt password hashing and JSON Web Tokens. Access is yours alone.
-          </p>
-        </div>
-
-        <div className="glass-panel" style={{ padding: '30px', transition: 'all 0.3s ease' }}>
-          <div style={{
-            background: 'rgba(112, 93, 242, 0.1)',
-            width: '48px',
-            height: '48px',
-            borderRadius: 'var(--radius-md)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: 'hsl(var(--accent-primary))',
-            marginBottom: '20px'
-          }}>
-            <BarChart3 size={24} />
-          </div>
-          <h3 style={{ fontSize: '1.25rem', marginBottom: '12px' }}>Analytics & Statistics</h3>
-          <p style={{ color: 'hsl(var(--text-secondary))', fontSize: '0.95rem', lineHeight: '1.5' }}>
-            Instantly view summary metrics for your job pipeline: applied jobs, interviews scheduled, rejections, and pending offers.
-          </p>
-        </div>
+        ))}
       </div>
 
-      {/* Footer Section */}
-      <footer style={{
-        marginTop: 'auto',
-        width: '100%',
-        borderTop: '1px solid hsl(var(--border-color))',
-        padding: '30px 0',
-        textAlign: 'center',
-        color: 'hsl(var(--text-muted))',
-        fontSize: '0.9rem',
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '8px'
-      }}>
-        <div>
-          <strong>CareerTrack Lite</strong> &copy; {new Date().getFullYear()} - All rights reserved.
-        </div>
-        <div style={{ fontSize: '0.85rem', color: 'hsl(var(--text-secondary))' }}>
+      {/* Footer */}
+      <footer className="mt-auto w-full pt-8 text-center text-sm flex flex-col gap-2"
+        style={{ borderTop: '1px solid hsl(var(--border-color))', color: 'hsl(var(--text-muted))' }}>
+        <div><strong>CareerTrack Lite</strong> &copy; {new Date().getFullYear()} — All rights reserved.</div>
+        <div style={{ color: 'hsl(var(--text-secondary))' }}>
           Developed by: <strong>Sayma Shimu</strong> | Student ID: <strong>CT-2026-LITE-045</strong>
         </div>
       </footer>
