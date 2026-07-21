@@ -178,36 +178,25 @@ export const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="animate-fade-in" style={{ maxWidth: '1200px', margin: '40px auto', padding: '0 20px' }}>
-      
-      {/* Header section */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '40px', flexWrap: 'wrap', gap: '20px' }}>
+    <div className="animate-fade-in max-w-6xl mx-auto px-5 py-10">
+
+      {/* Header */}
+      <div className="flex flex-wrap items-center justify-between gap-5 mb-10">
         <div>
-          <h1 style={{ fontSize: '2.5rem', marginBottom: '8px' }}>
-            Dashboard
-          </h1>
+          <h1 className="text-4xl font-extrabold mb-2">Dashboard</h1>
           <p style={{ color: 'hsl(var(--text-secondary))' }}>
             Welcome back, <strong style={{ color: 'hsl(var(--text-primary))' }}>{user?.name}</strong>. Here is your job application status.
           </p>
         </div>
-        <button 
-          onClick={() => setIsAddModalOpen(true)} 
-          className="btn btn-primary"
-          style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '12px 24px' }}
-        >
-          <Plus size={18} />
-          Add Application
+        <button onClick={() => setIsAddModalOpen(true)}
+          className="btn btn-primary flex items-center gap-2 px-6 py-3">
+          <Plus size={18} /> Add Application
         </button>
       </div>
 
       {/* Stats Grid */}
       {stats && (
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(130px, 1fr))',
-          gap: '16px',
-          marginBottom: '48px'
-        }}>
+        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
           {/* Card 1 - Total */}
           <div className="glass-panel" style={{
             padding: '20px',
@@ -303,7 +292,7 @@ export const Dashboard: React.FC = () => {
       )}
 
       {/* Main Content Layout */}
-      <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '30px' }}>
+      <div className="grid grid-cols-1 gap-8">
         
         {/* Recent Applications Section */}
         <div className="glass-panel" style={{ padding: '30px' }}>
@@ -374,28 +363,10 @@ export const Dashboard: React.FC = () => {
 
       {/* Add Application Modal */}
       {isAddModalOpen && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(10, 12, 18, 0.8)',
-          backdropFilter: 'blur(8px)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1000,
-          padding: '20px'
-        }}>
-          <div className="glass-panel" style={{
-            maxWidth: '600px',
-            width: '100%',
-            padding: '30px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
-            maxHeight: '90vh',
-            overflowY: 'auto'
-          }} onClick={(e) => e.stopPropagation()}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-5"
+          style={{ background: 'rgba(10,12,18,0.85)', backdropFilter: 'blur(8px)' }}>
+          <div className="glass-panel w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto shadow-2xl modal-inner"
+            onClick={(e) => e.stopPropagation()}>
             <h3 style={{ fontSize: '1.5rem', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Plus size={20} style={{ color: 'hsl(var(--accent-primary))' }} />
               Add Job Application
@@ -562,27 +533,10 @@ export const Dashboard: React.FC = () => {
 
       {/* Details View Modal */}
       {selectedApp && (
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          background: 'rgba(10, 12, 18, 0.8)',
-          backdropFilter: 'blur(8px)',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          zIndex: 1000,
-          padding: '20px'
-        }}>
-          <div className="glass-panel" style={{
-            maxWidth: '550px',
-            width: '100%',
-            padding: '30px',
-            boxShadow: '0 20px 40px rgba(0,0,0,0.5)',
-            position: 'relative'
-          }}>
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-5"
+          style={{ background: 'rgba(10,12,18,0.85)', backdropFilter: 'blur(8px)' }}>
+          <div className="glass-panel w-full max-w-lg p-8 shadow-2xl modal-inner"
+            onClick={(e) => e.stopPropagation()}>
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>
               <div>
