@@ -178,7 +178,7 @@ export const Dashboard: React.FC = () => {
   }
 
   return (
-    <div className="animate-fade-in max-w-6xl mx-auto px-5 py-10">
+    <div className="animate-fade-in page-container">
 
       {/* Header */}
       <div className="flex flex-wrap items-center justify-between gap-5 mb-10">
@@ -196,7 +196,7 @@ export const Dashboard: React.FC = () => {
 
       {/* Stats Grid */}
       {stats && (
-        <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-7 gap-4 mb-12">
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '16px', marginBottom: '40px' }}>
           {/* Card 1 - Total */}
           <div className="glass-panel" style={{
             padding: '20px',
@@ -291,11 +291,8 @@ export const Dashboard: React.FC = () => {
         </div>
       )}
 
-      {/* Main Content Layout */}
-      <div className="grid grid-cols-1 gap-8">
-        
-        {/* Recent Applications Section */}
-        <div className="glass-panel" style={{ padding: '30px' }}>
+      {/* Main Content */}
+      <div className="glass-panel" style={{ padding: '28px' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '24px' }}>
             <h3 style={{ fontSize: '1.4rem' }}>Recently Added Applications</h3>
             {recentApps.length > 0 && (
@@ -359,13 +356,13 @@ export const Dashboard: React.FC = () => {
             </div>
           )}
         </div>
-      </div>
 
       {/* Add Application Modal */}
       {isAddModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-5"
           style={{ background: 'rgba(10,12,18,0.85)', backdropFilter: 'blur(8px)' }}>
-          <div className="glass-panel w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto shadow-2xl modal-inner"
+          <div className="glass-panel w-full max-w-xl p-8 max-h-[90vh] overflow-y-auto"
+            style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}
             onClick={(e) => e.stopPropagation()}>
             <h3 style={{ fontSize: '1.5rem', marginBottom: '24px', display: 'flex', alignItems: 'center', gap: '8px' }}>
               <Plus size={20} style={{ color: 'hsl(var(--accent-primary))' }} />
@@ -535,7 +532,8 @@ export const Dashboard: React.FC = () => {
       {selectedApp && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-5"
           style={{ background: 'rgba(10,12,18,0.85)', backdropFilter: 'blur(8px)' }}>
-          <div className="glass-panel w-full max-w-lg p-8 shadow-2xl modal-inner"
+          <div className="glass-panel w-full max-w-lg p-8"
+            style={{ boxShadow: '0 20px 40px rgba(0,0,0,0.5)' }}
             onClick={(e) => e.stopPropagation()}>
             {/* Header */}
             <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '20px' }}>

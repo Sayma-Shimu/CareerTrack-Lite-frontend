@@ -261,7 +261,7 @@ export const Applications: React.FC = () => {
   };
 
   return (
-    <div className="animate-fade-in" style={{ maxWidth: '1200px', margin: '40px auto', padding: '0 20px' }}>
+    <div className="animate-fade-in page-container">
       
       {/* Header */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '32px', flexWrap: 'wrap', gap: '16px' }}>

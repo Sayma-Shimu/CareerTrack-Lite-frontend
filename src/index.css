@@ -97,6 +97,20 @@ a:hover {
   overflow-x: hidden;
 }
 
+/* Universal page container */
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 24px;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .page-container {
+    padding: 24px 16px;
+  }
+}
+
 /* Glassmorphism Classes */
 .glass-panel {
   background: rgba(25, 31, 46, 0.7);
