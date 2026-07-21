@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Briefcase, LogOut, LayoutDashboard, User as UserIcon, Menu, X } from 'lucide-react';
+import { Briefcase, LogOut, LayoutDashboard, User as UserIcon, Menu, X, Sparkles } from 'lucide-react';
 
 export const Navbar: React.FC = () => {
   const { user, logout } = useAuth();
@@ -34,6 +34,10 @@ export const Navbar: React.FC = () => {
             <Link to="/applications"
               className={`nav-link ${isActive('/applications') ? 'nav-link-active' : ''}`}>
               <Briefcase size={18} /> Applications
+            </Link>
+            <Link to="/ai-analyzer"
+              className={`nav-link ${isActive('/ai-analyzer') ? 'nav-link-active' : ''}`}>
+              <Sparkles size={18} /> AI Analyzer
             </Link>
             <div className="nav-divider" />
             <span className="nav-user hidden md:flex">
@@ -74,6 +78,11 @@ export const Navbar: React.FC = () => {
                 className={`mobile-nav-link ${isActive('/applications') ? 'nav-link-active' : ''}`}
                 onClick={close}>
                 <Briefcase size={18} /> Applications
+              </Link>
+              <Link to="/ai-analyzer"
+                className={`mobile-nav-link ${isActive('/ai-analyzer') ? 'nav-link-active' : ''}`}
+                onClick={close}>
+                <Sparkles size={18} /> AI Analyzer
               </Link>
               <button onClick={handleLogout}
                 className="btn btn-secondary w-full justify-center flex items-center gap-2 mt-2">

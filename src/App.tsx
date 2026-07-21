@@ -8,6 +8,7 @@ import { Register } from './pages/Register';
 import { Dashboard } from './pages/Dashboard';
 import { Applications } from './pages/Applications';
 import { NotFound } from './pages/NotFound';
+import { AiAnalyzer } from './pages/AiAnalyzer';
 
 // Protected Route Wrapper
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -65,6 +66,14 @@ const AppContent: React.FC = () => {
             element={
               <ProtectedRoute>
                 <Applications />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/ai-analyzer" 
+            element={
+              <ProtectedRoute>
+                <AiAnalyzer />
               </ProtectedRoute>
             } 
           />
